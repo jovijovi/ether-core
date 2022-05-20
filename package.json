@@ -1,0 +1,49 @@
+{
+  "name": "@jovijovi/ether-core",
+  "version": "0.1.0",
+  "description": "A common core API for Ethereum ecosystem",
+  "author": "jovijovi <mageyul@hotmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "typescript",
+    "ether-core",
+    "ethereum",
+    "ether",
+    "core",
+    "API"
+  ],
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jovijovi/ether-core.git"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist/*",
+    "test": "jest --coverage --forceExit",
+    "build": "yarn clean && tsc --build",
+    "clean-pub": "rm -rf ./publish/* && mkdir -p ./publish",
+    "prepub": "yarn clean-pub && yarn build && cp -ap ./dist/lib ./publish/lib && cp -ap LICENSE ./publish/ && cp -ap package.json ./publish/ && cp -ap README.md ./publish/"
+  },
+  "dependencies": {
+    "@jovijovi/ether-network": "^0.1.0",
+    "@jovijovi/pedrojs-common": "^1.0.27",
+    "ethers": "5.6.6"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "@typechain/ethers-v5": "10.0.0",
+    "@types/jest": "27.5.1",
+    "@types/node": "17.0.35",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "jest": "28.1.0",
+    "ts-jest": "28.0.2",
+    "ts-node": "10.7.0",
+    "typechain": "8.0.0",
+    "typescript": "4.6.4",
+    "yaml": "^2.1.0"
+  }
+}
