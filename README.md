@@ -4,7 +4,7 @@
 [![GitHub Actions](https://github.com/jovijovi/ether-core/workflows/Test/badge.svg)](https://github.com/jovijovi/ether-core)
 [![Coverage](https://img.shields.io/codecov/c/github/jovijovi/ether-core?label=\&logo=codecov\&logoColor=fff)](https://codecov.io/gh/jovijovi/ether-core)
 
-A common core API for Ethereum ecosystem. 
+Out-of-the-box core APIs for Ethereum ecosystem.
 
 ## Philosophy
 

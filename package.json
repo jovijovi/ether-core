@@ -1,7 +1,7 @@
 {
   "name": "@jovijovi/ether-core",
   "version": "0.1.0",
-  "description": "A common core API for Ethereum ecosystem",
+  "description": "Out-of-the-box core APIs for Ethereum ecosystem",
   "author": "jovijovi <mageyul@hotmail.com>",
   "license": "MIT",
   "keywords": [
@@ -10,7 +10,8 @@
     "ethereum",
     "ether",
     "core",
-    "API"
+    "API",
+    "Out-of-the-box"
   ],
   "main": "./lib/index.js",
   "module": "./lib/index.js",
