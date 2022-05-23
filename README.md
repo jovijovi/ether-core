@@ -12,13 +12,13 @@ Out-of-the-box core APIs for Ethereum ecosystem.
 
 ## Features
 
-- Out-of-the-box APIs
+- Out-of-the-box Ethereum APIs
 
 ## Development Environment
 
 - typescript `4.6.4`
 - node `v16.15.0`
-- ts-node `v10.7.0`
+- ts-node `v10.8.0`
 - yarn `v1.22.18`
 
 ## Install
