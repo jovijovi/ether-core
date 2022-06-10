@@ -1,6 +1,7 @@
 import {randomFillSync} from 'crypto';
 import {BigNumber, utils, Wallet} from 'ethers';
 import {Block, TransactionReceipt, TransactionResponse} from '@ethersproject/abstract-provider';
+import {Bytes} from '@ethersproject/bytes';
 import {auditor, log} from '@jovijovi/pedrojs-common';
 import {network} from '@jovijovi/ether-network';
 import {GasLimitC, MaxEntropyLength, StatusSuccessful, TransferConfirmations} from './params';
@@ -124,6 +125,11 @@ export async function Transfer(from: string, to: string, amount: string, pk: str
 		txRsp.hash, tx.from, tx.to, tx.gasPrice, tx.gasLimit, receipt.gasUsed);
 
 	return receipt;
+}
+
+// Sign message
+export async function SignMessage(pk: string, msg: Bytes | string): Promise<string> {
+	return await GetWallet(pk).signMessage(msg);
 }
 
 // Verify signature
