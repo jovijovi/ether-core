@@ -156,6 +156,18 @@ test('GetWallet', async () => {
 	assert.strictEqual(wallet.address, walletInfo.address);
 }, 10000)
 
+test('SignMessage', async () => {
+	const walletInfo = await core.NewWallet();
+	const sig1 = await core.SignMessage(walletInfo.pk, mockMsg);
+	const sig2 = await core.SignMessage(walletInfo.pk, mockMsg);
+	const sig3 = await core.SignMessage(walletInfo.pk, mockMsg);
+
+	console.debug("Msg=%s\nAddress=%s\nSig1=%s\nSig2=%s\nSig3=%s", mockMsg, walletInfo.address, sig1, sig2, sig3);
+
+	assert.strictEqual(sig1, sig2);
+	assert.strictEqual(sig1, sig3);
+})
+
 test('VerifySig', async () => {
 	const walletInfo = await core.NewWallet();
 	const wallet = core.GetWallet(walletInfo.pk);
