@@ -68,7 +68,7 @@ export async function GetBalanceOf(address: string): Promise<any> {
 	log.RequestId().debug("BalanceOf(%s)=%s, blockNumber=%d", address, balance.toString(), blockNumber);
 	return {
 		blockNumber: blockNumber,
-		balance: balance.toString()
+		balance: balance.toString(),
 	};
 }
 
@@ -116,7 +116,7 @@ export async function Transfer(from: string, to: string, amount: string, pk: str
 	const receipt = await provider.waitForTransaction(txRsp.hash, GetConfirmations());
 
 	// Check tx status
-	if (receipt.status != StatusSuccessful) {
+	if (receipt.status !== StatusSuccessful) {
 		log.RequestId().error("Transfer failed, error=%o", receipt);
 		return;
 	}
@@ -137,7 +137,7 @@ export async function VerifySig(address: string, msg: string, sig: string): Prom
 	auditor.Check(utils.isAddress(address), 'invalid address');
 	auditor.Check(msg.length > 0, 'invalid message');
 	auditor.Check(utils.isBytesLike(sig), 'invalid signature');
-	const verifiedAddress = utils.verifyMessage(msg, sig)
+	const verifiedAddress = utils.verifyMessage(msg, sig);
 	return verifiedAddress.toLowerCase() === address.toLowerCase();
 }
 
