@@ -116,7 +116,7 @@ export async function Transfer(from: string, to: string, amount: string, pk: str
 	const receipt = await provider.waitForTransaction(txRsp.hash, GetConfirmations());
 
 	// Check tx status
-	if (receipt.status != StatusSuccessful) {
+	if (receipt.status !== StatusSuccessful) {
 		log.RequestId().error("Transfer failed, error=%o", receipt);
 		return;
 	}
