@@ -16,10 +16,10 @@ Out-of-the-box core APIs for Ethereum ecosystem.
 
 ## Development Environment
 
-- typescript `4.7.3`
+- typescript `4.7.4`
 - node `v16.15.1`
 - ts-node `v10.8.1`
-- yarn `v1.22.18`
+- yarn `v1.22.19`
 
 ## Install
 
@@ -41,7 +41,7 @@ import {core} from '@jovijovi/ether-core';
 const walletInfo = await core.NewWallet();
 const wallet = core.GetWallet(walletInfo.pk);
 const receipt = await core.Transfer(YOUR_WALLET_ADDRESS, wallet.address, '1', wallet.privateKey);
-if (receipt.status != core.params.StatusSuccessful) {
+if (receipt.status !== core.params.StatusSuccessful) {
 	log.RequestId().error("Transfer failed, error=%o", receipt);
 	return;
 }
