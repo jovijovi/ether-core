@@ -102,7 +102,7 @@ export async function EstimateGasOfTransfer(from: string, to: string, amount: st
 }
 
 // Transfer
-export async function Transfer(from: string, to: string, amount: string, pk: string, gasLimitC = GasLimitC): Promise<TransactionReceipt> {
+export async function Transfer(from: string, to: string, amount: string, pk: string, gasLimitC = GasLimitC, confirmations?: number): Promise<TransactionReceipt> {
 	auditor.Check(utils.isAddress(from), 'invalid from address');
 	auditor.Check(utils.isAddress(to), 'invalid to address');
 	auditor.Check(utils.parseEther(amount) > BigNumber.from(0), 'invalid amount');
@@ -130,7 +130,7 @@ export async function Transfer(from: string, to: string, amount: string, pk: str
 	const txRsp = await signer.sendTransaction(tx);
 
 	// Wait tx
-	const receipt = await provider.waitForTransaction(txRsp.hash, GetConfirmations());
+	const receipt = await provider.waitForTransaction(txRsp.hash, GetConfirmations(confirmations));
 
 	// Check tx status
 	if (receipt.status !== StatusSuccessful) {
