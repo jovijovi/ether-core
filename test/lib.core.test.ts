@@ -178,6 +178,12 @@ test('VerifySig', async () => {
 	assert.strictEqual(isValid, true);
 }, 10000)
 
+test('EstimateGasOfTransfer', async () => {
+	const walletInfo = await core.NewWallet();
+	const gas = await core.EstimateGasOfTransfer(mockZeroAddress, walletInfo.address, mockTransferAmount);
+	console.debug("Gas=", gas.toNumber());
+}, 10000)
+
 test('Transfer', async () => {
 	const walletInfo = await core.NewWallet();
 	const wallet = core.GetWallet(walletInfo.pk);
