@@ -84,6 +84,23 @@ export async function Observer(address: string): Promise<any> {
 	};
 }
 
+// Estimate gas of transfer
+export async function EstimateGasOfTransfer(from: string, to: string, amount: string): Promise<BigNumber> {
+	auditor.Check(utils.isAddress(from), 'invalid from address');
+	auditor.Check(utils.isAddress(to), 'invalid to address');
+	auditor.Check(utils.parseEther(amount) > BigNumber.from(0), 'invalid amount');
+
+	const provider = network.MyProvider.Get();
+	const tx = {
+		from: utils.getAddress(from),
+		to: utils.getAddress(to),
+		value: utils.parseUnits(amount, 'wei'),
+		nonce: await provider.getTransactionCount(from, 'latest'),
+	};
+
+	return await provider.estimateGas(tx);
+}
+
 // Transfer
 export async function Transfer(from: string, to: string, amount: string, pk: string, gasLimitC = GasLimitC): Promise<TransactionReceipt> {
 	auditor.Check(utils.isAddress(from), 'invalid from address');
