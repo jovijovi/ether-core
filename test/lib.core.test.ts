@@ -46,6 +46,7 @@ const mockZeroAddress = '0x0000000000000000000000000000000000000000';
 const mockTxHash = '0x3031380da82bc89de4b585359682da277413a7baf1b021b20d43f7e7d3921130';
 const mockBlockHash = '0x58ff39832eb91833d9ead7215d1c87e1f4f7c2441d967135526eabbe61473b35';
 const mockMsg = 'The answer to life, the universe, and everything';
+const mockEntropyWords = 'Hello, world!'
 const mockTransferAmount = '1';
 
 class YmlConfig {
@@ -110,12 +111,20 @@ test('NewWallet', async () => {
 	const walletInfo = await core.NewWallet();
 	console.debug("New Wallet info=%o", walletInfo);
 	assert.strictEqual(walletInfo.address.length > 0, true);
+
+	const walletInfo2 = await core.NewWallet(mockEntropyWords);
+	console.debug("New Wallet2 info=%o", walletInfo2);
+	assert.strictEqual(walletInfo2.address.length > 0, true);
 }, 10000)
 
 test('NewJsonWallet', async () => {
 	const jsonWallet = await core.NewJsonWallet("Hello");
 	console.debug("New JSON wallet=%s", jsonWallet);
 	assert.strictEqual(jsonWallet.length > 0, true);
+
+	const jsonWallet2 = await core.NewJsonWallet("Hello", mockEntropyWords);
+	console.debug("New JSON wallet2=%s", jsonWallet2);
+	assert.strictEqual(jsonWallet2.length > 0, true);
 }, 10000)
 
 test('InspectJsonWallet', async () => {
@@ -154,6 +163,12 @@ test('GetWallet', async () => {
 	const wallet = core.GetWallet(walletInfo.pk);
 	console.debug("GetWallet=%s", wallet.address);
 	assert.strictEqual(wallet.address, walletInfo.address);
+
+	try {
+		core.GetWallet('');
+	} catch (e) {
+		console.debug(e)
+	}
 }, 10000)
 
 test('SignMessage', async () => {
