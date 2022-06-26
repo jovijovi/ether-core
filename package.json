@@ -1,6 +1,6 @@
 {
   "name": "@jovijovi/ether-core",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Out-of-the-box core APIs for Ethereum ecosystem",
   "author": "jovijovi <mageyul@hotmail.com>",
   "license": "MIT",

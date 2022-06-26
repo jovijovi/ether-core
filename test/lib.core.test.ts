@@ -11,6 +11,7 @@ import {
 	Observer,
 	VerifyAddress
 } from '../lib/core';
+import {TransferConfirmations} from '../lib/params';
 
 const configYaml = `
 custom:
@@ -65,6 +66,19 @@ test('Test Connection', async () => {
 	console.debug("Connected=", result);
 	assert.strictEqual(result, true);
 }, 10000)
+
+function wait(block?: number): number {
+	return core.GetConfirmations(block);
+}
+
+test('GetConfirmations', async () => {
+	let waitBlock = wait();
+	assert.strictEqual(waitBlock, TransferConfirmations);
+	waitBlock = wait(0);
+	assert.strictEqual(waitBlock, 0);
+	waitBlock = wait(1);
+	assert.strictEqual(waitBlock, 1);
+})
 
 test('GetGasPrice', async () => {
 	const gasPrice = await core.GetGasPrice();
