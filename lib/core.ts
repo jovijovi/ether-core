@@ -60,11 +60,11 @@ export async function GetBlockNumber(): Promise<number> {
 }
 
 // GetBalanceOf returns balance of address
-export async function GetBalanceOf(address: string): Promise<any> {
+export async function GetBalanceOf(address: string, blockHash?: string): Promise<any> {
 	auditor.Check(utils.isAddress(address), 'invalid address');
 	const provider = network.MyProvider.Get();
-	const blockNumber = await provider.getBlockNumber();
-	const balance = await provider.getBalance(address);
+	const blockNumber = blockHash ? (await provider.getBlock(blockHash)).number : await provider.getBlockNumber();
+	const balance = blockHash ? await provider.getBalance(address, blockHash) : await provider.getBalance(address);
 	log.RequestId().debug("BalanceOf(%s)=%s, blockNumber=%d", address, balance.toString(), blockNumber);
 	return {
 		blockNumber: blockNumber,
