@@ -35,7 +35,7 @@ export async function GetGasPrice(): Promise<any> {
 export async function GetTxReceipt(txHash: string): Promise<TransactionReceipt> {
 	const provider = network.MyProvider.Get();
 	const receipt = await provider.getTransactionReceipt(txHash);
-	log.RequestId().debug("txHash=%s, receipt=%o", txHash, receipt);
+	log.RequestId().trace("txHash=%s, receipt=%o", txHash, receipt);
 	return receipt;
 }
 
