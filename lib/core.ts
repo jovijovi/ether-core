@@ -235,3 +235,4 @@ export const VerifyAddress = utils.isAddress;
 
 // Export
 export * as params from './params';
+export * from './proxy';

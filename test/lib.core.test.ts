@@ -29,7 +29,7 @@ custom:
     # Network name
     network: mainnet
     # Use provider pool
-    providerPool: true
+    providerPool: false
 
   networks:
     # Polygon
@@ -43,6 +43,9 @@ custom:
         browser: https://polygonscan.com
 `
 
+const mockInvalidAddress = '0xInvalidAddress';
+const mockProxyAddress = '0x9d305a42A3975Ee4c1C57555BeD5919889DCE63F';
+const mockNotProxyAddress = '0x451612C0e742E27f2CfB3888AD2813EEC8DD1ba3';
 const mockZeroAddress = '0x0000000000000000000000000000000000000000';
 const mockTxHash = '0x3031380da82bc89de4b585359682da277413a7baf1b021b20d43f7e7d3921130';
 const mockBlockHash = '0x58ff39832eb91833d9ead7215d1c87e1f4f7c2441d967135526eabbe61473b35';
@@ -58,14 +61,11 @@ let setting: YmlConfig;
 
 beforeAll(async () => {
 	setting = yaml.parse(configYaml);
-})
-
-test('Test Connection', async () => {
 	network.LoadConfig(setting.custom);
 	const result = await network.isConnected();
 	console.debug("Connected=", result);
 	assert.strictEqual(result, true);
-}, 10000)
+},10000)
 
 function wait(block?: number): number {
 	return core.GetConfirmations(block);
@@ -89,7 +89,7 @@ test('GetTxReceipt', async () => {
 	const receipt = await core.GetTxReceipt(mockTxHash);
 	console.debug("Receipt=%o", receipt);
 	assert.strictEqual(receipt.status, 1);
-}, 20000)
+}, 30000)
 
 test('GetTxResponse', async () => {
 	const txRsp = await core.GetTxResponse(mockTxHash);
@@ -181,7 +181,7 @@ test('GetWallet', async () => {
 	try {
 		core.GetWallet('');
 	} catch (e) {
-		console.debug(e)
+		console.debug(e);
 	}
 }, 10000)
 
@@ -219,6 +219,19 @@ test('Transfer', async () => {
 	try {
 		await core.Transfer(wallet.address, mockZeroAddress, mockTransferAmount, wallet.privateKey);
 	} catch (e) {
-		console.debug(e)
+		console.debug(e);
 	}
+}, 40000)
+
+test('IsProxyContract', async () => {
+	try {
+		await core.IsProxyContract(mockInvalidAddress);
+	} catch (e) {
+		console.debug("Expected error=", e);
+	}
+
+	console.debug("IsProxy(%s)=", mockProxyAddress, await core.IsProxyContract(mockProxyAddress));
+	console.debug("[NoCache] IsProxy(%s)=", mockNotProxyAddress, await core.IsProxyContract(mockNotProxyAddress, false));
+	console.debug("[EnableCache] IsProxy(%s)=", mockNotProxyAddress, await core.IsProxyContract(mockNotProxyAddress));
+	console.debug("[Cached] IsProxy(%s)=", mockNotProxyAddress, await core.IsProxyContract(mockNotProxyAddress));
 }, 40000)
