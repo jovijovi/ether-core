@@ -1,7 +1,8 @@
 import yaml from 'yaml';
-import {core} from '../lib';
-import {network} from '@jovijovi/ether-network';
 import assert from 'assert';
+import {util} from '@jovijovi/pedrojs-common';
+import {network} from '@jovijovi/ether-network';
+import {core} from '../lib';
 import {
 	GetBalanceOf,
 	GetTxReceipt,
@@ -65,7 +66,7 @@ beforeAll(async () => {
 	const result = await network.isConnected();
 	console.debug("Connected=", result);
 	assert.strictEqual(result, true);
-},10000)
+}, 10000)
 
 function wait(block?: number): number {
 	return core.GetConfirmations(block);
@@ -86,10 +87,13 @@ test('GetGasPrice', async () => {
 }, 10000)
 
 test('GetTxReceipt', async () => {
-	const receipt = await core.GetTxReceipt(mockTxHash);
-	console.debug("Receipt=%o", receipt);
+	let receipt;
+	await util.retry.Run(async () => {
+		receipt = await core.GetTxReceipt(mockTxHash);
+		console.debug("Receipt=%o", receipt);
+	}, 10, 5, false)
 	assert.strictEqual(receipt.status, 1);
-}, 30000)
+}, 60000)
 
 test('GetTxResponse', async () => {
 	const txRsp = await core.GetTxResponse(mockTxHash);
